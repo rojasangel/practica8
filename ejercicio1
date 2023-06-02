@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include "archivo.h"
+
+void capturarDatosDeAlumnos(FILE *fp) {
+    struct alumno a;
+
+    while (1) {
+        printf("Ingrese la matricula del alumno : ");
+        if (scanf("%d", &a.matricula)=='\n' )
+        {
+          
+            printf("Terminando la captura de datos...\n");
+            break;
+        }
+
+        printf("Ingrese el nombre del alumno: ");
+        scanf("%s", a.nombre);
+
+        printf("Ingrese la direccion del alumno: ");
+        scanf("%s", a.direccion);
+
+        fwrite(&a, sizeof(struct alumno), 1, fp);
+
+        printf("Datos del alumno agregados correctamente.\n\n");
+    }
+}
+
+void desplegarDatosDeAlumnos(FILE *fp) {
+    struct alumno a;
+
+    while (fread(&a, sizeof(struct alumno), 1, fp) == 1) {
+        printf("Matricula: %d\n", a.matricula);
+        printf("Nombre: %s\n", a.nombre);
+        printf("Direccion: %s\n\n", a.direccion);
+    }
+}
